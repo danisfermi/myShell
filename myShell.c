@@ -1,33 +1,41 @@
 #include<stdio.h>
 #include<stdlib.h>
 // Read and Parse from Config File
-void readConfig()
+int readConfig()
 {
 	FILE *fptr;
-	char line[500];
+	char line[200];
 	fptr=fopen("config","r");
 	if (fptr==NULL)
 	{
-		printf("\nUnable to find config file.");
+		printf("Unable to find config file.");
 		return 1;
 	}
 	else
 	{
-		while(fgets(line,sizeof(line),file) != NULL)
+		while(fgets(line, sizeof(line), fptr)!= NULL)
 		{
+			printf("\n%s",line);
 			// Code to Parse Config File
 		}
 	}
 	fclose(fptr);
+	return 1;
 }
 
 // When myShell is called Interactively
-
+int myShellInteract()
+{
+	return 1;
+}
 
 // When myShell is called with a Script as Argument
+int myShellScript()
+{
+	return 1;
+}
 
-
-int main(int argc, char *argv)
+int main(int argc, char **argv)
 {
 	// Read from myShell Configuration Files
 	readConfig();
