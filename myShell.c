@@ -1,6 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+// Function to read a line from command into the buffer
+char *readLine()
+{
+	
+}
+
 // Read and Parse from Config File
+char SHELL_NAME[50] = "myShell";
+int QUIT = 0;
 int readConfig()
 {
 	FILE *fptr;
@@ -26,6 +35,17 @@ int readConfig()
 // When myShell is called Interactively
 int myShellInteract()
 {
+	while(QUIT!=0)
+	{
+		char *line;
+		char **args;
+		printf("%s> ", SHELL_NAME);
+		line=readLine();
+		args=splitLine(line);
+		execLine(args);
+		free(line);
+		free(args);
+	}
 	return 1;
 }
 
@@ -42,7 +62,7 @@ int myShellScript(char filename[100])
 	}
 	else
 	{
-		printf("\nFile Opened. Parsing");
+		printf("\nFile Opened. Parsing.");
 		while(fgets(line, sizeof(line), fptr)!= NULL)
 		{
 			printf("\n%s", line);
