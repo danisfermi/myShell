@@ -5,7 +5,7 @@ int readConfig()
 {
 	FILE *fptr;
 	char line[200];
-	fptr=fopen("config","r");
+	fptr=fopen("config", "r");
 	if (fptr==NULL)
 	{
 		printf("Unable to find config file.");
@@ -15,7 +15,7 @@ int readConfig()
 	{
 		while(fgets(line, sizeof(line), fptr)!= NULL)
 		{
-			printf("\n%s",line);
+			printf("\n%s", line);
 			// Code to Parse Config File
 		}
 	}
@@ -30,8 +30,26 @@ int myShellInteract()
 }
 
 // When myShell is called with a Script as Argument
-int myShellScript()
+int myShellScript(char filename[100])
 {
+	printf("Received Script. Opening %s", filename);
+	FILE *fptr;
+	fptr=fopen(filename, "r");
+	if (fptr==NULL)
+	{
+		printf("\nUnable to open file.");
+		return 1;
+	}
+	else
+	{
+		printf("\nFile Opened. Parsing");
+		while(fgets(line, sizeof(line), fptr)!= NULL)
+		{
+			printf("\n%s", line);
+			// Code to Parse Config File
+		}
+	}
+	fclose(fptr);
 	return 1;
 }
 
