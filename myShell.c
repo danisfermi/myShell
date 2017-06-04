@@ -3,7 +3,22 @@
 // Read and Parse from Config File
 void readConfig()
 {
-
+	FILE *fptr;
+	char line[500];
+	fptr=fopen("config","r");
+	if (fptr==NULL)
+	{
+		printf("\nUnable to find config file.");
+		return 1;
+	}
+	else
+	{
+		while(fgets(line,sizeof(line),file) != NULL)
+		{
+			// Code to Parse Config File
+		}
+	}
+	fclose(fptr);
 }
 
 // When myShell is called Interactively
