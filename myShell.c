@@ -62,7 +62,7 @@ int readConfig()
 	fptr=fopen("config", "r");
 	if (fptr==NULL)
 	{
-		printf("Unable to find config file.");
+		printf("Unable to find config file.\n");
 		return 1;
 	}
 	else
@@ -86,7 +86,6 @@ int myShellInteract()
 	{
 		printf("%s> ", SHELL_NAME);
 		line=readLine();
-		printf("%s", line);
 		args=splitLine(line);
 		execLine(args);
 		free(line);
