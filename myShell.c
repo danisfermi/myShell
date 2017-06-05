@@ -4,7 +4,40 @@
 // Function to read a line from command into the buffer
 char *readLine()
 {
-	
+	char *line = (char *)malloc(sizeof(char)*1024); // Dynamically Allocate Buffer
+	char c;
+	int pos=0, bufsize=1024;
+	if (!line) // Buffer Allocation Failed
+	{
+		printf("\nBuffer Allocation Error.");
+		exit(EXIT_FAILURE);
+	}
+	while(TRUE)
+	{
+		c=getchar(c);
+		if (c==EOF || c=='\n') // If End of File or New line, replace with Null character
+		{
+			line[pos]='\0';
+			return line;
+		}
+		else
+		{
+			line[pos]=c;
+		}
+		pos++;
+		// If we have exceeded the buffer
+		if (pos>=bufsize)
+		{
+			bufsize+=1024;
+			line=realloc(line, 1024);
+			if (!line) // Buffer Allocation Failed
+			{
+			printf("\nBuffer Allocation Error.");
+			exit(EXIT_FAILURE);
+			}
+		}
+	}
+
 }
 
 // Read and Parse from Config File
@@ -35,10 +68,10 @@ int readConfig()
 // When myShell is called Interactively
 int myShellInteract()
 {
+	char *line;
+	char **args;
 	while(QUIT!=0)
 	{
-		char *line;
-		char **args;
 		printf("%s> ", SHELL_NAME);
 		line=readLine();
 		args=splitLine(line);
