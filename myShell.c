@@ -12,9 +12,9 @@ char *readLine()
 		printf("\nBuffer Allocation Error.");
 		exit(EXIT_FAILURE);
 	}
-	while(TRUE)
+	while(1)
 	{
-		c=getchar(c);
+		c=getchar();
 		if (c==EOF || c=='\n') // If End of File or New line, replace with Null character
 		{
 			line[pos]='\0';
@@ -38,6 +38,18 @@ char *readLine()
 		}
 	}
 
+}
+
+// Function to split a line into constituent commands
+char **splitLine(char *line)
+{
+	return EXIT_SUCCESS;
+}
+
+// Function to execute commands read from command line
+int execLine()
+{
+	return EXIT_SUCCESS;
 }
 
 // Read and Parse from Config File
@@ -70,10 +82,11 @@ int myShellInteract()
 {
 	char *line;
 	char **args;
-	while(QUIT!=0)
+	while(QUIT==0)
 	{
 		printf("%s> ", SHELL_NAME);
 		line=readLine();
+		printf("%s", line);
 		args=splitLine(line);
 		execLine(args);
 		free(line);
@@ -87,6 +100,7 @@ int myShellScript(char filename[100])
 {
 	printf("Received Script. Opening %s", filename);
 	FILE *fptr;
+	char line[200];
 	fptr=fopen(filename, "r");
 	if (fptr==NULL)
 	{
@@ -111,9 +125,9 @@ int main(int argc, char **argv)
 	// Read from myShell Configuration Files
 	readConfig();
 	// Parsing commands Interactive mode or Script Mode
-	if (argc==0)
+	if (argc==1)
 		myShellInteract();
-	else if (argc==1)
+	else if (argc==2)
 		myShellScript(argv[1]);
 	else
 		printf("\nInvalid Number of Arguments");
