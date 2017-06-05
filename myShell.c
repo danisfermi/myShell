@@ -1,12 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 // Function to read a line from command into the buffer
 char *readLine()
 {
-	char *line = (char *)malloc(sizeof(char)*1024); // Dynamically Allocate Buffer
+	char *line = (char *)malloc(sizeof(char) * 1024); // Dynamically Allocate Buffer
 	char c;
-	int pos=0, bufsize=1024;
+	int pos = 0, bufsize = 1024;
 	if (!line) // Buffer Allocation Failed
 	{
 		printf("\nBuffer Allocation Error.");
@@ -15,21 +16,21 @@ char *readLine()
 	while(1)
 	{
 		c=getchar();
-		if (c==EOF || c=='\n') // If End of File or New line, replace with Null character
+		if (c == EOF || c == '\n') // If End of File or New line, replace with Null character
 		{
-			line[pos]='\0';
+			line[pos] = '\0';
 			return line;
 		}
 		else
 		{
-			line[pos]=c;
+			line[pos] = c;
 		}
-		pos++;
+		pos ++;
 		// If we have exceeded the buffer
-		if (pos>=bufsize)
+		if (pos >= bufsize)
 		{
-			bufsize+=1024;
-			line=realloc(line, 1024);
+			bufsize += 1024;
+			line = realloc(line, sizeof(char) * bufsize);
 			if (!line) // Buffer Allocation Failed
 			{
 			printf("\nBuffer Allocation Error.");
@@ -43,7 +44,34 @@ char *readLine()
 // Function to split a line into constituent commands
 char **splitLine(char *line)
 {
-	return EXIT_SUCCESS;
+	char **tokens = (char **)malloc(sizeof(char *) * 64);
+	char *token;
+	char delim[10] = " \t\n\r\a";
+	int pos = 0, bufsize = 64;
+	if (!tokens)
+	{
+		printf("\nBuffer Allocation Error.");
+		exit(EXIT_FAILURE);
+	}
+	token = strtok(line, delim);
+	while (token != NULL)
+	{
+		tokens[pos] = token;
+		pos ++;
+		if (pos >= bufsize)
+		{
+			bufsize += 64;
+			line = realloc(line, bufsize * sizeof(char *));
+			if (!line) // Buffer Allocation Failed
+			{
+			printf("\nBuffer Allocation Error.");
+			exit(EXIT_FAILURE);
+			}
+		}
+		token = strtok(NULL, delim);
+	}
+	tokens[pos] = NULL;
+	return tokens;
 }
 
 // Function to execute commands read from command line
@@ -59,15 +87,15 @@ int readConfig()
 {
 	FILE *fptr;
 	char line[200];
-	fptr=fopen("config", "r");
-	if (fptr==NULL)
+	fptr = fopen("config", "r");
+	if (fptr == NULL)
 	{
 		printf("Unable to find config file.\n");
 		return 1;
 	}
 	else
 	{
-		while(fgets(line, sizeof(line), fptr)!= NULL)
+		while(fgets(line, sizeof(line), fptr) != NULL)
 		{
 			printf("\n%s", line);
 			// Code to Parse Config File
@@ -82,7 +110,7 @@ int myShellInteract()
 {
 	char *line;
 	char **args;
-	while(QUIT==0)
+	while(QUIT == 0)
 	{
 		printf("%s> ", SHELL_NAME);
 		line=readLine();
@@ -100,8 +128,8 @@ int myShellScript(char filename[100])
 	printf("Received Script. Opening %s", filename);
 	FILE *fptr;
 	char line[200];
-	fptr=fopen(filename, "r");
-	if (fptr==NULL)
+	fptr = fopen(filename, "r");
+	if (fptr == NULL)
 	{
 		printf("\nUnable to open file.");
 		return 1;
@@ -124,9 +152,9 @@ int main(int argc, char **argv)
 	// Read from myShell Configuration Files
 	readConfig();
 	// Parsing commands Interactive mode or Script Mode
-	if (argc==1)
+	if (argc == 1)
 		myShellInteract();
-	else if (argc==2)
+	else if (argc == 2)
 		myShellScript(argv[1]);
 	else
 		printf("\nInvalid Number of Arguments");
