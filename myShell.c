@@ -86,8 +86,8 @@ int myShellLaunch(char **args)
 		if (execvp(args[0], args) == -1)
 		{
 			perror("myShell: ");
-			exit(EXIT_FAILURE);
 		}
+	exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
 	{
