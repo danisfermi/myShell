@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h> 
+#include <string.h> // For strtok() and strcmp()
+#include <unistd.h> // For fork(), pid_t
+#include <sys/wait.h> // For waitpid() and associated macros
 
 // Function to read a line from command into the buffer
 char *readLine()
