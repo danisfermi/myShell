@@ -116,6 +116,11 @@ int execShell(char **args)
 		// Empty command
 		return 1;
 	}
+	// Loop to check for builtin functions
+	for (int i=0; i< 3; i++) // 3 is the number of builtin functions
+	{
+		// Empty loop. To be replaced with code to check if builtin function.
+	}
 	ret = myShellLaunch(args);
 	return ret;
 }
