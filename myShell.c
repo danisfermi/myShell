@@ -75,9 +75,34 @@ char **splitLine(char *line)
 }
 
 // Function to execute commands read from command line
-int execLine()
+int myShellLaunch(char **args)
 {
-	return EXIT_SUCCESS;
+	pid_t pid, wpid;
+	int status;
+	pid = fork();
+	if (pid == 0)
+	{
+		// The Child Process
+		if (execvp(args[0], args) == -1)
+		{
+			perror("myShell: ");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else if (pid < 0)
+	{
+		//Forking Error
+		perror("myShell: ");
+	}
+	else
+	{
+		// The Parent Process
+	do 
+	{
+      wpid = waitpid(pid, &status, WUNTRACED);
+    } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+	return 1;
 }
 
 // Read and Parse from Config File
@@ -115,7 +140,7 @@ int myShellInteract()
 		printf("%s> ", SHELL_NAME);
 		line=readLine();
 		args=splitLine(line);
-		execLine(args);
+		execShell(args);
 		free(line);
 		free(args);
 	}
