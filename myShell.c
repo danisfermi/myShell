@@ -74,7 +74,7 @@ char **splitLine(char *line)
 	return tokens;
 }
 
-// Function to execute commands read from command line
+// Function to create child process and run command
 int myShellLaunch(char **args)
 {
 	pid_t pid, wpid;
@@ -102,6 +102,12 @@ int myShellLaunch(char **args)
       wpid = waitpid(pid, &status, WUNTRACED);
     } while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
+	return 1;
+}
+
+// Function to execute command from terminal
+int execShell(char **args)
+{
 	return 1;
 }
 
