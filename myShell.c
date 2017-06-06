@@ -110,7 +110,14 @@ int myShellLaunch(char **args)
 // Function to execute command from terminal
 int execShell(char **args)
 {
-	return 1;
+	int ret;
+	if (args[0] == NULL)
+	{
+		// Empty command
+		return 1;
+	}
+	ret = myShellLaunch(args);
+	return ret;
 }
 
 // Read and Parse from Config File
