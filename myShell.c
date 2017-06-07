@@ -125,9 +125,10 @@ int execShell(char **args)
 		return 1;
 	}
 	// Loop to check for builtin functions
-	for (int i=0; i< 3; i++) // 3 is the number of builtin functions
+	for (int i=0; i< numBuiltin(); i++) // numBuiltin() returns the number of builtin functions
 	{
-		// Empty loop. To be replaced with code to check if builtin function.
+		if(strcmp(args[0], builtin_cmd[i])==0) // Check if user function matches builtin function name
+			return (*builtin_func[i])(args); // Call respective builtin function with arguments
 	}
 	ret = myShellLaunch(args);
 	return ret;
