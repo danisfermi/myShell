@@ -79,10 +79,7 @@ char **splitLine(char *line)
 // Section Dealing with Built-in Commands
 char *builtin_cmd[] = {"cd"};
 
-int (*builtin_func[]) (char **) = 
-{
-  &myShell_cd
-};
+int (*builtin_func[]) (char **) = {&myShell_cd}; // Array of function pointers for call from execShell
 
 int numBuiltin() // Function to return number of builtin commands
 {
@@ -90,7 +87,21 @@ int numBuiltin() // Function to return number of builtin commands
 }
 
 // Builtin command definitions
-
+int myShell_cd(char **args)
+{
+	if (args[1] == NULL) 
+	{
+		printf("myShell: expected argument to \"cd\"\n");
+	} 
+	else 
+	{
+		if (chdir(args[1]) != 0) 
+		{
+			perror("myShell: ");
+		}
+	}
+	return 1;
+}
 
 // Function to create child process and run command
 int myShellLaunch(char **args)
