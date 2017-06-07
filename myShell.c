@@ -208,6 +208,7 @@ int myShellScript(char filename[100])
 	printf("Received Script. Opening %s", filename);
 	FILE *fptr;
 	char line[200];
+	char **args;
 	fptr = fopen(filename, "r");
 	if (fptr == NULL)
 	{
@@ -216,11 +217,12 @@ int myShellScript(char filename[100])
 	}
 	else
 	{
-		printf("\nFile Opened. Parsing.");
+		printf("\nFile Opened. Parsing. Parsed commands displayed first.");
 		while(fgets(line, sizeof(line), fptr)!= NULL)
 		{
 			printf("\n%s", line);
-			// Code to Parse Config File
+			args=splitLine(line);
+			execShell(args);
 		}
 	}
 	fclose(fptr);
