@@ -79,10 +79,18 @@ char **splitLine(char *line)
 // Section Dealing with Built-in Commands
 char *builtin_cmd[] = {"cd"};
 
+int (*builtin_func[]) (char **) = 
+{
+  &myShell_cd
+};
+
 int numBuiltin() // Function to return number of builtin commands
 {
 	return sizeof(builtin_cmd)/sizeof(char *);
 }
+
+// Builtin command definitions
+
 
 // Function to create child process and run command
 int myShellLaunch(char **args)
