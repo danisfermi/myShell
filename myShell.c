@@ -167,6 +167,7 @@ int readConfig()
 {
 	FILE *fptr;
 	char line[200];
+	char **args;
 	fptr = fopen("config", "r");
 	if (fptr == NULL)
 	{
@@ -178,9 +179,12 @@ int readConfig()
 		while(fgets(line, sizeof(line), fptr) != NULL)
 		{
 			printf("\n%s", line);
-			// Code to Parse Config File
+			args=splitLine(line);
+			if(strcmp(args[0], "export")==0)
+				SHELL_NAME = args[1];
 		}
 	}
+	free(args);
 	fclose(fptr);
 	return 1;
 }
@@ -225,6 +229,7 @@ int myShellScript(char filename[100])
 			execShell(args);
 		}
 	}
+	free(args);
 	fclose(fptr);
 	return 1;
 }
