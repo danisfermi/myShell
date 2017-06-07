@@ -4,6 +4,9 @@
 #include <unistd.h> // For fork(), pid_t
 #include <sys/wait.h> // For waitpid() and associated macros
 
+char SHELL_NAME[50] = "myShell";
+int QUIT = 0;
+
 // Function to read a line from command into the buffer
 char *readLine()
 {
@@ -77,9 +80,9 @@ char **splitLine(char *line)
 }
 
 // Section Dealing with Built-in Commands
-char *builtin_cmd[] = {"cd"};
+char *builtin_cmd[] = {"cd", "exit"};
 
-int (*builtin_func[]) (char **) = {&myShell_cd}; // Array of function pointers for call from execShell
+int (*builtin_func[]) (char **) = {&myShell_cd, &myShell_exit}; // Array of function pointers for call from execShell
 
 int numBuiltin() // Function to return number of builtin commands
 {
@@ -101,6 +104,12 @@ int myShell_cd(char **args)
 		}
 	}
 	return 1;
+}
+
+int myShell_exit()
+{
+	QUIT = 1;
+	return 0;
 }
 
 // Function to create child process and run command
@@ -154,8 +163,6 @@ int execShell(char **args)
 }
 
 // Read and Parse from Config File
-char SHELL_NAME[50] = "myShell";
-int QUIT = 0;
 int readConfig()
 {
 	FILE *fptr;
