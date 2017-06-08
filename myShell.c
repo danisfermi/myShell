@@ -80,6 +80,12 @@ char **splitLine(char *line)
 }
 
 // Section Dealing with Built-in Commands
+
+// Function Declarations
+int myShell_cd(char **args);
+int myShell_exit();
+
+// Definitions
 char *builtin_cmd[] = {"cd", "exit"};
 
 int (*builtin_func[]) (char **) = {&myShell_cd, &myShell_exit}; // Array of function pointers for call from execShell
