@@ -181,7 +181,7 @@ int readConfig()
 			printf("\n%s", line);
 			args=splitLine(line);
 			if(strcmp(args[0], "export")==0)
-				SHELL_NAME = args[1];
+				strcpy(SHELL_NAME, args[1]);
 		}
 	}
 	free(args);
