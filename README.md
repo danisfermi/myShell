@@ -1,7 +1,7 @@
 # myShell
 
 myShell is a basic implementation of a Shell, written in C, demonstrating basics of how a shell works: read, parse, fork, execute and wait.
-I'm just working on it to improve my skills in C programming.
+I'm just working on it to improve my skills in C programming. For a project description, I have borrowed the following [Masters project from University Of Wisconsin-Madison](http://pages.cs.wisc.edu/~dusseau/Classes/CS537-F07/Projects/P1/p1.html). I was guided by [the following blog post](https://brennan.io/2015/01/16/write-a-shell-in-c/).
 
 ## Compilation
 
